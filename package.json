@@ -1,0 +1,28 @@
+{
+  "name": "shipitmobi-cordova-plugin",
+  "version": "1.0.0",
+  "description": "This plugin allows you to receive push notifications for Android devices. Powered by ShipitMobi(https://www.shipit.mobi).",
+  "cordova": {
+    "id": "shipitmobi-cordova-plugin",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shipitmobi/shipitmobi-cordova-plugin.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+  ],
+  "engines": [
+    {
+      "name": "cordova-android",
+      "version": ">=4.0.0"
+    }
+  ],
+  "author": "Karmatics Pvt. Ltd.",
+  "license": "MIT",
+  "homepage": "https://github.com/shipitmobi/shipitmobi-cordova-plugin#README.md"
+}

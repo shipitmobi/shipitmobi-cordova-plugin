@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova.plugin.shipitmobi" version="1.0.0">
+
+<name>SIMPlugin</name>
+<description>This plugin allows you to receive push notifications for Android devices. Powered by ShipitMobi(https://www.shipit.mobi)</description>
+<engines>
+    <engine name="cordova" version=">=4.0.0" />
+</engines>
+
+<license>MIT</license>
+<repo>https://github.com/shipitmobi/shipitmobi-cordova-plugin</repo>
+
+<js-module src="www/SIMPlugin.js" name="SIMPlugin">
+    <clobbers target="SIMPlugin" />
+</js-module>
+
+<!-- android -->
+<platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="SIMPlugin">
+        <param name="android-package" value="com.plugin.SIMPlugin" />
+      </feature>
+    </config-file>
+
+	<config-file target="AndroidManifest.xml" parent="/manifest">
+		<!-- GCM connects to Google Services. -->
+		<uses-permission android:name="android.permission.INTERNET" />
+		<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+		<!-- GCM requires a Google account. -->
+		<uses-permission android:name="android.permission.WAKE_LOCK" />
+		<!-- Creates a custom permission so only this app can receive its messages.
+			 NOTE: the permission *must* be called PACKAGE.permission.C2D_MESSAGE,
+			where PACKAGE is the application's package name.
+		-->
+		<permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+		<uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+		<!-- This app has permission to register and receive dataf message. -->
+		<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+		<!-- So the sounds from assets folder could work for notification sounds. -->
+		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+		<!-- So the app can control the vibration for notification -->
+		<uses-permission android:name="android.permission.VIBRATE" />
+
+		<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+		<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+		<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+		<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	</config-file>
+
+	<config-file target="AndroidManifest.xml" parent="/manifest/application">
+		<receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND" >
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+				<category android:name="$PACKAGE_NAME" />
+			</intent-filter>
+		</receiver>
+		<!-- [END gcm_receiver] -->
+
+		<!-- [START gcm_listener] -->
+		<service
+			android:name="com.example.shipit.SIM_GcmListenerSvc"
+			android:exported="false" >
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+			</intent-filter>
+		</service>
+		<!-- [END gcm_listener] -->
+
+		<!-- [START instanceId_listener] -->
+		<service
+			android:name="com.shipit.android.SIM_InstanceIDListenerSvc"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.google.android.gms.iid.InstanceID"/>
+			</intent-filter>
+		</service>
+		<!-- [END instanceId_listener] -->
+
+		<service
+			android:name="com.shipit.android.SIM_RegsIntentSvc"
+			android:exported="false">
+		</service>
+
+		<service
+			android:name="com.shipit.android.SIM_GeoFencing"
+			android:exported="false" >
+		</service>
+
+		<service
+			android:name="com.shipit.android.SIM_NotifArtist">
+		</service>
+
+		<activity
+			android:name="com.example.shipit.shipitDefaultActivity">
+		</activity>
+
+		<activity
+			android:name="com.shipit.android.SIM_InAppNotifArtist"
+			android:excludeFromRecents="true"
+			android:launchMode="singleTask"
+			android:taskAffinity=""
+			android:theme="@style/Theme.Transparent"></activity>
+
+		<activity
+			android:name=".NotifDisp"
+			android:label="@string/title_activity_notif_disp"
+			android:theme="@style/Theme.Transparent" >
+		</activity>
+
+		<receiver android:name=".shipitCustomBcastRcvr" android:enabled="true">
+			<intent-filter>
+				<action android:name="NOTIF_CLEAR"></action>
+				<action android:name="android.intent.action.TIMEZONE_CHANGED" />
+			</intent-filter>
+		</receiver>
+
+	</config-file>
+
+    <source-file src="src/android/com/plugin/SIMPlugin.java" target-dir="src/com/plugin" />
+    <framework src="src/android/SIMPlugin.gradle" custom="true" type="gradleReference" />
+    <source-file src="src/android/lib/shipitmobi.aar" target-dir="libs" />
+    <framework src="com.android.support:appcompat-v7:21.0.3" />
+    <framework src="com.android.support:recyclerview-v7:21.0.3" />
+    <framework src="com.google.android.gms:play-services-gcm:8.3.0" />
+    <framework src="com.google.android.gms:play-services-location:8.3.0" />
+    <framework src="com.google.android.gms:play-services-base:8.3.0" />
+    <framework src="com.google.android.gms:play-services-identity:8.3.0" />
+
+</platform> <!-- android -->
+
+</plugin>
