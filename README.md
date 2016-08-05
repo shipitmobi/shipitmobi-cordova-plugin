@@ -1,0 +1,1 @@
+# shipitmobi-cordova-plugin
