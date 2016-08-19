@@ -13,8 +13,10 @@
     "url": "https://github.com/shipitmobi/shipitmobi-cordova-plugin.git"
   },
   "keywords": [
+    "cordova",
+    "device",
     "ecosystem:cordova",
-    "cordova-android",
+    "cordova-android"
   ],
   "engines": [
     {
