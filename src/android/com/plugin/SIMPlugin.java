@@ -100,6 +100,7 @@ public class SIMPlugin extends CordovaPlugin{
 			if(params.has("buildType") && params.getString("buildType").equalsIgnoreCase("dev"))
 				cfg_local.buildType = "DEV";
 			cfg_local.richPushEnable = true;
+			cfg_local.pushEnable = true;
 			shipit.init(cordova.getActivity());
 			SIM_ActTracker.init(cordova.getActivity().getApplication());
 			callbackContext.success();
