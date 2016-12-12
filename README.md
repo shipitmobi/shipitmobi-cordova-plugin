@@ -13,7 +13,7 @@ cordova plugin add https://github.com/shipitmobi/shipitmobi-cordova-plugin.git
 
 ### Guide
 
-https://docs.shipit.mobi/simwiki/Cordova
+https://docs.shipit.mobi/Cordova
 
 
 ## LICENSE

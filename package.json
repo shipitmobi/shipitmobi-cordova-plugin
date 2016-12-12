@@ -1,6 +1,6 @@
 {
   "name": "shipitmobi-cordova-plugin",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "This plugin allows you to receive push notifications for Android devices. Powered by ShipitMobi(https://www.shipit.mobi).",
   "cordova": {
     "id": "shipitmobi-cordova-plugin",

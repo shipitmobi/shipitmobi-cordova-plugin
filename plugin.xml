@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova.plugin.shipitmobi" version="1.0.1">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova.plugin.shipitmobi" version="1.0.3">
 
 <name>SIMPlugin</name>
 <description>This plugin allows you to receive push notifications for Android devices. Powered by ShipitMobi(https://www.shipit.mobi)</description>
@@ -59,7 +59,7 @@
 
 		<!-- [START gcm_listener] -->
 		<service
-			android:name="com.example.shipit.SIM_GcmListenerSvc"
+			android:name="com.shipit.android.SIM_GcmListenerSvc"
 			android:exported="false" >
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -92,7 +92,7 @@
 		</service>
 
 		<activity
-			android:name="com.example.shipit.shipitDefaultActivity">
+			android:name="com.shipit.android.SIM_NotifActionActivity">
 		</activity>
 
 		<activity
@@ -115,13 +115,32 @@
 			</intent-filter>
 		</receiver>
 
+        <receiver
+            android:name="com.shipit.android.SIM_NotifArtist$rightButtonListener"
+            android:exported="false">
+            <intent-filter>
+                <action android:name= "com.shipit.android.SIM_RGT_CLK_INTNT"></action>
+                <action android:name= "com.shipit.android.SIM_RGT_SLD_INTNT"></action>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.shipit.android.SIM_NotifArtist$leftButtonListener"
+            android:exported="false">
+            <intent-filter>
+                <action android:name= "com.shipit.android.SIM_ON_PLAY_INTNT"></action>
+                <action android:name= "com.shipit.android.SIM_LFT_CLK_INTNT"></action>
+                <action android:name= "com.shipit.android.SIM_LFT_SLD_INTNT"></action>
+            </intent-filter>
+        </receiver>
+
 	</config-file>
 
     <source-file src="src/android/com/plugin/SIMPlugin.java" target-dir="src/com/plugin" />
     <framework src="src/android/SIMPlugin.gradle" custom="true" type="gradleReference" />
     <source-file src="src/android/lib/shipitmobi.aar" target-dir="libs" />
-    <framework src="com.android.support:appcompat-v7:23.0.1" />
-    <framework src="com.android.support:recyclerview-v7:23.0.1" />
+    <framework src="com.android.support:support-v4:23.0.0" />
+    <framework src="com.android.support:recyclerview-v7:23.0.0" />
     <framework src="com.google.android.gms:play-services-gcm:8.3.0" />
     <framework src="com.google.android.gms:play-services-location:8.3.0" />
     <framework src="com.google.android.gms:play-services-base:8.3.0" />
