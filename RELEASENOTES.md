@@ -1,5 +1,14 @@
 # Release Notes
 
+### 1.0.7 (Feb 05, 2017)
+* Supported getBundle api support for extracting customdata passed in push notification
+
+### 1.0.6 (Feb 04, 2017)
+* Supported getChannelId api added
+
+### 1.0.5 (Jan 23, 2017)
+* Minor bug fix
+
 ### 1.0.3 (Jan 20, 2017)
 * Added support for RICH Notification format 13
 

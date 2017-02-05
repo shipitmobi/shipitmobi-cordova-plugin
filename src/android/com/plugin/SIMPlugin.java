@@ -60,12 +60,21 @@ public class SIMPlugin extends CordovaPlugin{
 		    this.deleteTag(args, callbackContext);
 		    return true;
 		}
+		else if(action.equals("getChannelID"))
+		{
+		    this.getChannelID(args, callbackContext);
+		    return true;
+		}
+		else if(action.equals("getBundle"))
+		{
+		    this.getBundle(args, callbackContext);
+		    return true;
+		}
 
 		return false;
 	}
 
-	public static void sendJavascript(  String funName,  JSONObject _json )
-	{
+	public static void sendJavascript(  String funName,  JSONObject _json ){
 		String _d =  "javascript:shipit."+funName+"(" + _json.toString() + ")";
 		if(gwebView !=null){
 		    gwebView.sendJavascript( _d );
@@ -75,8 +84,7 @@ public class SIMPlugin extends CordovaPlugin{
 		}
 	}
 
-	private void initialize(JSONArray data, CallbackContext callbackContext)
-	{
+	private void initialize(JSONArray data, CallbackContext callbackContext){
 		JSONObject params = null;
 		try
 		{
@@ -112,8 +120,36 @@ public class SIMPlugin extends CordovaPlugin{
 		}
 	}
 
-	private void pushEnable(JSONArray data, CallbackContext callbackContext)
-	{
+	private void getChannelID(JSONArray data, CallbackContext callbackContext){
+			gwebView = this.webView;
+			if(pendingMessage != null){
+				sendJavascript(pendingFunctionName, pendingMessage);
+				pendingMessage = null;
+			}
+			String channelID = "";
+			channelID = shipit.SIM_getChannelID(cordova.getActivity());
+			callbackContext.success(channelID);
+	}
+
+	private void getBundle(JSONArray data, CallbackContext callbackContext){
+		try{
+			gwebView = this.webView;
+			if(pendingMessage != null){
+				sendJavascript(pendingFunctionName, pendingMessage);
+				pendingMessage = null;
+			}
+			String jsonString = "";
+			jsonString = shipit.SIM_ReadBundle(cordova.getActivity());
+			callbackContext.success(jsonString);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			Log.e("SIMPlugin", "getBundle");
+			callbackContext.error(e.getMessage());
+			return;
+		}
+	}
+
+	private void pushEnable(JSONArray data, CallbackContext callbackContext){
 		JSONObject params = null;
 		try
 		{
@@ -143,8 +179,7 @@ public class SIMPlugin extends CordovaPlugin{
 		}
 	}
 
-	private void setTag(JSONArray data, CallbackContext callbackContext)
-	{
+	private void setTag(JSONArray data, CallbackContext callbackContext){
 		JSONObject params = null;
 
 		try
@@ -196,8 +231,7 @@ public class SIMPlugin extends CordovaPlugin{
 		}
 	}
 
-	private void deleteTag(JSONArray data, CallbackContext callbackContext)
-	{
+	private void deleteTag(JSONArray data, CallbackContext callbackContext){
 		JSONObject params = null;
 
 		try

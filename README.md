@@ -20,7 +20,7 @@ https://docs.shipit.mobi/Cordova
 
 	The MIT License
 	
-	Copyright (c) 2016 Karmatics Pvt. Ltd.
+	Copyright (c) 2017 Karmatics Pvt. Ltd.
 	http://www.shipit.mobi
 	
 	Permission is hereby granted, free of charge, to any person obtaining a copy

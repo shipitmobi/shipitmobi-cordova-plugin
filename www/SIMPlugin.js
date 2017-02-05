@@ -1,5 +1,5 @@
 var SIMPlugin = {
-	
+
 	registerDevice: function(title, myteststring, buttonlable){
 		cordova.exec(this.success, this.fail, 'SIMPlugin', 'registerDevice', [title, myteststring, buttonlable]);
 	},
@@ -8,11 +8,11 @@ var SIMPlugin = {
 	 * Initialize device configuration and register for Push Notification.
 	 * Function: initialize
 	 * Platform: android
-	 * 
+	 *
 	 * Parameters:
 	 * config	array		{
-	 * 						 projectid:'XXXX' (Mandatory), 
-	 * 						 shipitAppID :'YYYY' (Mandatory), 
+	 * 						 projectid:'XXXX' (Mandatory),
+	 * 						 shipitAppID :'YYYY' (Mandatory),
 	 * 						 buildType: "DEV/PROD" (Optional default PROD, useful for adding device as test device)
 	 * 						}
 	 * config	errorCB		callback function in case of error
@@ -22,15 +22,15 @@ var SIMPlugin = {
 		if(errorCB == undefined)
 			errorCB = this.fail;
 		if(successCB == undefined)
-			successCB = this.success;		
-		cordova.exec(this.success, this.fail, "SIMPlugin", "initialize", config ? [config] : []);
+			successCB = this.success;
+		cordova.exec(successCB, errorCB, "SIMPlugin", "initialize", config ? [config] : []);
 	},
-	
+
 	/*
 	 * Enable/Disable Push notification for device.
 	 * Function: notificationEnable
 	 * Platform: android
-	 * 
+	 *
 	 * Parameters:
 	 * config	array		{NotificationEnable:true/false}
 	 * config	errorCB		callback function in case of error
@@ -41,7 +41,7 @@ var SIMPlugin = {
 			errorCB = this.fail;
 		if(successCB == undefined)
 			successCB = this.success;
-		cordova.exec(this.success, this.fail, "SIMPlugin", "pushEnable", config ? [config] : []);
+		cordova.exec(successCB, errorCB, "SIMPlugin", "pushEnable", config ? [config] : []);
 	},
 
 	findDataType: function(data)
@@ -62,9 +62,41 @@ var SIMPlugin = {
 
 	/*
 	 * set a value of Tag for device.
+	 * Function: getChannelID
+	 *
+	 * Parameters:
+	 * config	errorCB		callback function in case of error
+	 * config	successCB	callback function in case of success
+	*/
+	getChannelID: function(errorCB, successCB) {
+		if(errorCB == undefined)
+			errorCB = this.fail;
+		if(successCB == undefined)
+			successCB = this.success;
+		cordova.exec(successCB, errorCB, "SIMPlugin", "getChannelID", []);
+	},
+
+	/*
+	 * set a value of Tag for device.
+	 * Function: getBundle
+	 *
+	 * Parameters:
+	 * config	errorCB		callback function in case of error
+	 * config	successCB	callback function in case of success
+	*/
+	getBundle: function(errorCB, successCB) {
+		if(errorCB == undefined)
+			errorCB = this.fail;
+		if(successCB == undefined)
+			successCB = this.success;
+		cordova.exec(function(data){successCB(data?JSON.parse(data):data);},errorCB,"SIMPlugin","getBundle",[]);
+	},
+
+	/*
+	 * set a value of Tag for device.
 	 * Function: setTag
 	 * Platform: android
-	 * 
+	 *
 	 * Parameters:
 	 * config	array		{tagName:"MyTag",tagValue:'MyTagValue'}
 	 * config	errorCB		callback function in case of error
@@ -81,7 +113,7 @@ var SIMPlugin = {
 			errorCB();
 			return;
 		}
-		
+
 		var type = 0;
 		for(var i=0; i< tags.length; i++)
 		{
@@ -94,14 +126,14 @@ var SIMPlugin = {
 			if(type == 'Date')
 				tags[i]['tagValue'] = tags[i]['tagValue'].getTime();
 		}
-		cordova.exec(this.success, this.fail, "SIMPlugin", "setTag", tags);
+		cordova.exec(successCB, errorCB, "SIMPlugin", "setTag", tags);
 	},
 
 	/*
 	 * delete a tag from the device
 	 * Function: deleteTag
 	 * Platform: android
-	 * 
+	 *
 	 * Parameters:
 	 * config	array		{tagName:"MyTag"}
 	 * config	errorCB		callback function in case of error
@@ -114,7 +146,7 @@ var SIMPlugin = {
 			successCB = this.success;
 		cordova.exec(errorCB, successCB, "SIMPlugin", "deleteTag", config ? [config] : []);
 	},
-	
+
 	/*
 	 * Default success callback
 	 */
@@ -122,7 +154,7 @@ var SIMPlugin = {
 		console.log("Success");
 	},
 
-	/* 
+	/*
 	 * Default failure callback
 	 */
 	fail: function(error){
