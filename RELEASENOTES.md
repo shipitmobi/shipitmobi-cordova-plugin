@@ -1,5 +1,8 @@
 # Release Notes
 
+### 1.0.8 (Feb 08, 2017)
+* Minor issue fix related to geolocation
+
 ### 1.0.7 (Feb 05, 2017)
 * Supported getBundle api support for extracting customdata passed in push notification
 
